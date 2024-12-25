@@ -16,8 +16,19 @@ guessed_state = []
 while len(guessed_state) < 50:
     user_input = screen.textinput(f"Counter {len(guessed_state)} / {STATES} States Correct",
                                   prompt="What's another state name?").title()
-    print(user_input)
     all_states = data["state"].to_list()
+
+    if user_input == "Exit":
+        missing_states = []
+        for state in all_states:
+            if state not in guessed_state:
+                missing_states.append(state)
+
+        new_data = pd.DataFrame(missing_states)
+        new_data.to_csv("States Game Sheet ")
+        break
+
+
     if user_input in all_states:
         guessed_state.append(user_input)
         t = turtle.Turtle()
@@ -28,4 +39,3 @@ while len(guessed_state) < 50:
         t.write(user_input)
 
 
-screen.exitonclick()
